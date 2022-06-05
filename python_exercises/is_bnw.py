@@ -6,11 +6,13 @@ MONOCHROMATIC_MAX_VARIANCE = 0.005
 COLOR = 1000
 MAYBE_COLOR = 100
 
-def detect_color_image(file):
-    v = ImageStat.Stat(file).var
-    # v = ImageStat.Stat(Image.open(file)).var
+def detect_color_image(path, item):
+    # v = ImageStat.Stat(file).var
+    v = ImageStat.Stat(Image.open(path + item)).var
     is_monochromatic = reduce(lambda x, y: x and y < MONOCHROMATIC_MAX_VARIANCE, v, True)
-    print (file, '-->\t')
+    print('-------------------------------------------------')
+    print (item, '-->\t')
+    print(v)
     if is_monochromatic:
         print ("Monochromatic image"),
     else:
@@ -34,12 +36,12 @@ def detect_color_image(file):
 if __name__ == '__main__': # windows support
     # setup the pool and start processing jobs
     print('Looping over folder')
-    path = "myfolder" #replace it
+    path = "mypath" # replace
     photos = os.listdir(path)
     print(photos)
     for item in photos:
         print(os.path.isfile(path + item))
-        im = Image.open(path + item).convert('RGB')
-        detect_color_image(im)
+        # im = Image.open(path + item).convert('RGB')
+        detect_color_image(path,item)
 
         print("Detect Colour Image")
